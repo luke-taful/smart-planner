@@ -6,11 +6,13 @@ IMPLEMENTED:
 - Task object
     - Store relevant data
     - access relevant data
+    - recurance and frequency
+
+- Converted to a maven project
 
 TODO:
 
 - Task object
-    - recurrance and frequency
 - need some script that updates the timer on each recurring task daily
 
 - Store and access user timetable
