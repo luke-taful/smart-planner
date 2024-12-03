@@ -1,3 +1,5 @@
+package LTF;
+
 import java.time.LocalDateTime;
 
 class Task{
@@ -37,6 +39,18 @@ class Task{
     // Getter and Setter for duration
     public int getDuration() {
         return duration;
+    }
+    public String getDurationString(){
+        int hours = duration/60;
+        int minutes = duration%60;
+        
+        if(hours == 0){
+            return(minutes + " minutes");
+        }
+        if (minutes == 0){
+            return(hours + " hour(s)");
+        }
+        return hours + " hour(s) " + minutes + " minutes ";
     }
 
     public void setDuration(int duration) {
