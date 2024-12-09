@@ -1,30 +1,94 @@
 package LTF;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 
-class Task{
+public class Task{
 
     private String name;
     private int duration;
-    private LocalDateTime deadline;
+    private LocalDate deadline;
+    private int dtd;
+
     private boolean recurring;
-    private String freq;
+    private String freq; //D = daily, W = weekly, M = Monthly, Y = Yearly
+    private LocalDate startDate;
+
+    private boolean fixedTime;
+    private LocalDateTime startTime;
 
 
-    public Task(String name, int duration, LocalDateTime deadline){
+    /*  There are 4 potential types of task:
+        - non-recurring w/ set deadline
+        - recurring w/ rolling deadline
+        - non-recurring w/ set start time
+        - recurring w/ set recurring start time
+    */    
+        
+
+    public Task(String name, int duration, LocalDate deadline){
         this.name = name;
         this.duration = duration;
         this.deadline = deadline;
+        
         this.recurring = false;
+        this.fixedTime = false;
+
+        Period period = Period.between(LocalDate.now(), deadline);
+        this.dtd = period.getDays();
+
     }
 
-    public Task(String name, int duration, LocalDateTime startDate, String freq){
+    public Task(String name, int duration, LocalDate startDate, String freq){
         this.name = name;
         this.duration = duration;
-        this.deadline = startDate;
+        this.startDate = startDate;
+
         this.recurring = true;
+        this.fixedTime = false;
+
         this.freq = freq; 
+        switch (freq){
+            case "D":
+                this.dtd = 1;
+            case "W":
+                this.dtd = 7;
+            case "M":
+                this.dtd = 30; //Need to add logic for varying days in each month here, use StartDate?
+            case "Y":
+                this.dtd = 36;
+        }
     }
+
+    public Task(String name, int duration, LocalDateTime startTime){
+        this.name = name;
+        this.duration = duration;
+        this.startTime = startTime;
+        this.recurring = false;
+        this.fixedTime = true;
+    }
+
+    public Task(String name, int duration, LocalDateTime startTime, String freq){
+        this.name = name;
+        this.duration = duration;
+        this.startTime = startTime;
+        this.recurring = true;
+        this.fixedTime = true;
+
+        this.freq = freq; 
+        switch (freq){
+            case "D":
+                this.dtd = 1;
+            case "W":
+                this.dtd = 7;
+            case "M":
+                this.dtd = 30; //Need to add logic for varying days in each month here, use StartDate?
+            case "Y":
+                this.dtd = 36;
+        }
+    }
+
 
     // Getter and Setter for name
     public String getName() {
